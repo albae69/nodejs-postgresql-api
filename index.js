@@ -13,20 +13,20 @@ app.use(express.json());
 app.get("/", (request, response) => {
 	response.json({ info: "Node.js, Express, and Postgres API" });
 });
-// get all users
-app.get("/users", db.getUsers);
 
-// get users by id
-app.get("/users/:id", db.getUserById);
+app.route('users/:id')
+	// get users by id
+	.get(db.getUserById)
+	// update user
+	.put(db.updateUser)
+	// delete user
+	.delete(db.deleteUser);
 
-// create user
-app.post("/users", db.createUser);
-
-// update user
-app.put("/users/:id", db.updateUser);
-
-// delete user
-app.delete("/users/:id", db.deleteUser);
+app.route('/users')
+	// get all users
+	.get(db.getUsers)
+	// create user
+	.post(db.createUser);
 
 // routes
 
